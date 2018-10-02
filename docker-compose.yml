@@ -8,7 +8,7 @@ services:
       - rmqnet
     posts:
       - "8500:8500"
-    enviroment:
+    environment:
       - CONSUL_BIND_INTERFACE=eth0
       - CONSUL_LOCAL_CONFIG={"skip_leave_on_interrupt": true}
     command: "agent -server -ui -client=0.0.0.0 -bootstrap-expect=1 -retry-join=consul"

@@ -5,11 +5,10 @@ services:
     image: consul:latest
     networks: 
       - rmqnet
-    posts:
+    ports:
       - "8500:8500"
     deploy:
       replicas: 1
-      restart_policy: on-failure
       placement:
         constraints: [node.role == manager]
     environment:
@@ -19,7 +18,7 @@ services:
   rabbitmq:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: rabbit-mq-plugins.dockerfile
     networks: 
       - rmqnet
     ports:
@@ -28,7 +27,6 @@ services:
       - "25672:25672"
     deploy:
       replicas: 2
-      restart_policy: on-failure
       placement:
         constraints: [node.role == manager]
     environment:
@@ -45,6 +43,7 @@ services:
       - CLEANUP_WARN_ONLY=false
     volumes:
       - mq_data:/var/lib/rabbitmq/mnesia
+    command: "rabbitmq-plugins --offline enable rabbitmq_management;rabbitmq-plugins --offline enable rabbitmq_peer_discovery_consul"
 
 volumes:
   mq_data:

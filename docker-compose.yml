@@ -16,10 +16,8 @@ services:
     command: "agent -server -ui -client=0.0.0.0 -bootstrap-expect=1 -retry-join=consul"
 
   rabbitmq:
-    build:
-      context: .
-      dockerfile: rabbit-mq-plugins.dockerfile
     image: rabbitmq:3-management
+    env_file: .env
     networks: 
       - rmqnet
     ports:
@@ -27,14 +25,14 @@ services:
       - "15672:15672"
       - "25672:25672"
     deploy:
-      replicas: 2
+      replicas: 1
       placement:
         constraints: [node.role == manager]
     environment:
-      - RABBITMQ_ERLANG_COOKIE=kuriertecnologia
-      - RABBITMQ_DEFAULT_USER=teste
-      - RABBITMQ_DEFAULT_PASS=123@teste
-      - RABBITMQ_DEFAULT_VHOST=/
+      - RABBITMQ_ERLANG_COOKIE=${RABBITMQ_ERLANG_COOKIE}
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+      - RABBITMQ_DEFAULT_VHOST=${RABBITMQ_DEFAULT_VHOST}
       - AUTOCLUSTER_TYPE=consul
       - CONSUL_HOST=consul
       - CONSUL_PORT=8500
@@ -44,7 +42,7 @@ services:
       - CLEANUP_WARN_ONLY=false
     volumes:
       - mq_data:/var/lib/rabbitmq/mnesia
-    command: bash -c "rabbitmq-plugins --offline enable rabbitmq_management && rabbitmq-plugins --offline enable rabbitmq_peer_discovery_consul && rabbitmq-plugins enable --offline autocluster"
+    command: bash -c "rabbitmq-plugins --offline enable rabbitmq_management && rabbitmq-plugins --offline enable rabbitmq_peer_discovery_consul && rabbitmq-server"
 
 volumes:
   mq_data:

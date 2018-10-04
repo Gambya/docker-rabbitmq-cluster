@@ -41,9 +41,8 @@ services:
       - AUTOCLUSTER_CLEANUP=true
       - CLEANUP_WARN_ONLY=false
     volumes:
-      - ./cluster-entrypoint.sh:/var/lib/rabbitmq/bin/cluster-entrypoint.sh
       - mq_data:/var/lib/rabbitmq/mnesia
-    entrypoint: "/"
+    command: /bin/bash -c "set -e; rabbitmq-plugins --offline enable rabbitmq_management; rabbitmq-plugins --offline enable rabbitmq_peer_discovery_consul; rabbitmq-plugins enable rabbitmq_consistent_hash_exchange; sleep 2s; rabbitmq-server;"
 
 volumes:
   mq_data:

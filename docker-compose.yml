@@ -29,10 +29,10 @@ services:
       placement:
         constraints: [node.role == manager]
     environment:
-      - RABBITMQ_ERLANG_COOKIE=${RABBITMQ_ERLANG_COOKIE}
-      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
-      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
-      - RABBITMQ_DEFAULT_VHOST=${RABBITMQ_DEFAULT_VHOST}
+      - RABBITMQ_ERLANG_COOKIE=kuriertecnologia
+      - RABBITMQ_DEFAULT_USER=kurier
+      - RABBITMQ_DEFAULT_PASS=123@login
+      - RABBITMQ_DEFAULT_VHOST=/
       - AUTOCLUSTER_TYPE=consul
       - CONSUL_HOST=consul
       - CONSUL_PORT=8500

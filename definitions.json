@@ -1,0 +1,25 @@
+{
+    "rabbit_version": "3.7.3",
+    "users": [{
+        "name": "kurier",
+        "password": "123@login",
+        "tags": "administrator"
+    }],
+    "vhosts": [{
+        "name": "/"
+    }],
+    "permissions": [{
+        "user": "kurier",
+        "vhost": "/",
+        "configure": ".*",
+        "write": ".*",
+        "read": ".*"
+    }],
+    "topic_permissions": [],
+    "parameters": [],
+    "global_parameters": [],
+    "policies": [],
+    "queues": [],
+    "exchanges": [],
+    "bindings": []
+}
